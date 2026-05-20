@@ -29,7 +29,7 @@ aria-expanded="false" aria-label="Toggle navigation">
       <li class="nav-item">
         <a class="nav-link" href="home.php">Home</a>
       </li>
-      <?php
+      <?php // add recipe pages
       
     if(!isset($_SESSION)) 
     { 

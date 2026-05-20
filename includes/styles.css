@@ -15,7 +15,7 @@
             margin: 0;
             font-size: 20px;
         }
-        .nav-button {
+.nav-button {
             background: #007bff;
             color: white;
             border: none;
@@ -65,3 +65,7 @@
             color: white;
             font-weight: bold;
         }
+div {
+  width:flex;
+  float:left;
+}
