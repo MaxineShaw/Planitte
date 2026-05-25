@@ -1,5 +1,8 @@
 <?php
+session_start();
+session_unset();
+session_destroy();
 
-include 'includes/nav.php';
-include 'includes/footer.php';
+header('Location: login.php');
+exit;
 ?>
