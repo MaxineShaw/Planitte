@@ -4,9 +4,9 @@ include 'connect_db.php';
  include 'includes/footer.php';
 // Get current day selection, month, and year, or set as current time
 $daySelect = isset($_GET["daySelect"]) ? intval($_GET["daySelect"]) : date('j');
-$month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
+$month = isset($_GET['month']) ? intval($_GET['month']) : date('m');
 $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
-$date = $year .'-'. $month .'-'. $daySelect;
+$date = date('Y-m-d', mktime(0, 0, 0, $month, $daySelect, $year));
 
 // Adjust for overflow (e.g., month = 13 -> next year)
 if ($month > 12) {
@@ -33,13 +33,14 @@ $monthName = date('F', $firstDayOfMonth);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="includes/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <title>PHP Calendar - <?= $monthName . ' ' . $year ?></title>
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-4 justify-content-center d-flex">
+        <div class="row justify-content-center d-flex">
+            <div class="justify-content-end">
                 <div class="calendar" >
                     <div class="calendar-header">
                      <button class="nav-button" onclick="changeMonth(-1)">&#8592;</button>
@@ -61,7 +62,7 @@ $monthName = date('F', $firstDayOfMonth);
                        // Fill the days of the month
                        $day = 1;
                        $today = date('j');
-                     $currentMonth = date('n');
+                     $currentMonth = date('m');
                       $currentYear = date('Y');
 
                      while ($day <= $daysInMonth) {
@@ -106,16 +107,14 @@ $monthName = date('F', $firstDayOfMonth);
     while ( $row = mysqli_fetch_array( $r, MYSQLI_ASSOC ))
 {    if( $row["date"] == $date ){
         echo '
-         <div class="col-4 justify-content-center d-flex">
-           <div class="card" style="width: 18rem;">
-        	 <img class="card-img-top src='. $row['recipe_img'].'" alt="recipeImage">
+         <div class="col-4 justify-content-end d-flex">
+           <div class="card bg-secondary" style="width: 18rem;">
+        	 <img src='. $row['recipe_img'].' class="card-img-top" alt="recipeImage">
         	  <div class="card-body">
         	   <h5 class="card-title text-center">' . $row['recipe_name'] .'</h5>
-        	   <p class="card-text">' . $row['item_name'] .'</p>
+        	   <p class="card-text">' . $row['recipe_desc'] .'</p>
            </div>
-            <div class="card-footer text-muted">
-          Meal
-         </div>
+            <div class="card-footer">' . $row['recipe_meal'] .'</div>
         	</div>
          </div>';
 }
@@ -123,14 +122,10 @@ $monthName = date('F', $firstDayOfMonth);
     }
          //card for adding 
              echo '
-         <div class="col-4 justify-content-center d-flex">
-          <div class="card" style="width: 18rem;">
-        	 <img class="card-img-top" alt="recipeImage">
-	          <div class="card-body">
-	           <h5 class="card-title text-center">test</h5>
-	           <p class="card-text">test</p>
-             </div>
-	        </div>
+         <div class="col-4 justify-content-end d-flex">
+          <div class="card bg-secondary" style="width: 18rem;">
+          <div class="card-body justify-content-center d-flex">
+	          <a href="add_recipe.php" class="btn btn-primary mt-auto p-2">Add recipe</a>
     </div>
   </div>
   </div>';
