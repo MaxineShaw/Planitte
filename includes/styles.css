@@ -104,3 +104,10 @@ td.notToday:hover {
     padding-left: 0;
     padding-right: 0;
 }
+input[type=text] {
+    width: 100%;
+     max-width: 100%; /* Prevents the box from getting too wide on desktop */
+     box-sizing: border-box; /* Includes padding and borders in the width */
+     padding: 12px 16px;
+     height: 10px;
+}
